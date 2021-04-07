@@ -1,6 +1,7 @@
 package com.codecool.employeemanager.repository;
 
 import com.codecool.employeemanager.model.ClearanceLevel;
+import com.codecool.employeemanager.model.Department;
 import com.codecool.employeemanager.model.Employee;
 import org.springframework.stereotype.Component;
 
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Component
 public class EmpRepImplementation implements EmployeeRepository {
@@ -17,9 +19,9 @@ public class EmpRepImplementation implements EmployeeRepository {
 
     public EmpRepImplementation() {
         // for testing purposes
-        save(new Employee("John Doe", "john@doe.com", "IT", "36301234567", LocalDate.parse("1970-02-03"), ClearanceLevel.USER, "Developer"));
-        save(new Employee("Jane Doe", "jane@doe.com", "HR", "36305671234", LocalDate.parse("1985-10-10"), ClearanceLevel.ADMIN, "Recruiter"));
-        save(new Employee("Jack Smith", "jack@smith.com", "Sales", "36309876543", LocalDate.parse("1960-05-25"), ClearanceLevel.SUPERVISOR, "Purchasing leader"));
+        save(new Employee("John Doe", "john@doe.com", new Department("IT"), "36301234567", LocalDate.parse("1970-02-03"), ClearanceLevel.USER, "Developer"));
+        save(new Employee("Jane Doe", "jane@doe.com", new Department("HR"), "36305671234", LocalDate.parse("1985-10-10"), ClearanceLevel.ADMIN, "Recruiter"));
+        save(new Employee("Jack Smith", "jack@smith.com", new Department("Sales"), "36309876543", LocalDate.parse("1960-05-25"), ClearanceLevel.SUPERVISOR, "Purchasing leader"));
     }
 
     @Override
@@ -68,7 +70,7 @@ public class EmpRepImplementation implements EmployeeRepository {
     }
 
     @Override
-    public List<Employee> findByDepartment(String departmentName) {
-        return null;
+    public List<Employee> findByDepartment(String department) {
+        return employees.stream().filter(employee -> employee.getDepartment().getName().equals(department)).collect(Collectors.toList());
     }
 }
