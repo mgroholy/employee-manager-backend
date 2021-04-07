@@ -7,9 +7,10 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Component
-public class EmpRepImplementation implements EmployeeRepository{
+public class EmpRepImplementation implements EmployeeRepository {
 
     private List<Employee> employees = new ArrayList<>();
 
@@ -22,7 +23,7 @@ public class EmpRepImplementation implements EmployeeRepository{
 
     @Override
     public void save(Employee employee) {
-        int latestEmployeeId = employees.isEmpty() ? 0 : employees.get(employees.size()-1).getId();
+        int latestEmployeeId = employees.isEmpty() ? 0 : employees.get(employees.size() - 1).getId();
         employee.setId(latestEmployeeId + 1);
         employees.add(employee);
     }
@@ -44,7 +45,10 @@ public class EmpRepImplementation implements EmployeeRepository{
 
     @Override
     public Employee findById(int id) {
-        return null;
+        return employees.stream()
+                .filter(employee -> employee.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("Employee not found by id - " + id));
     }
 
     @Override
