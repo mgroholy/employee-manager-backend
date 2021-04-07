@@ -28,6 +28,11 @@ public class EmployeeController {
         return employeeService.findAllEmployees();
     }
 
+    @GetMapping("/employees")
+    public List<Employee> getEmployees(@RequestParam String department){
+        return employeeService.findByDepartment(department);
+    }
+
     @PostMapping("/employees")
     public Employee createNewEmployee(@RequestBody Employee employee){
         return employeeService.addEmployee(employee);
