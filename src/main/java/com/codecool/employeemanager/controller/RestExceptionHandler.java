@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 
 
 @ControllerAdvice
@@ -15,6 +16,12 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     private ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException ex){
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, LocalDateTime.now(), ex.getMessage());
+        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    private ResponseEntity<Object> handleNoSuchElementException(NoSuchElementException ex){
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, LocalDateTime.now(), ex.getMessage());
         return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
     }
