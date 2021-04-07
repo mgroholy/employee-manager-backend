@@ -1,17 +1,27 @@
 package com.codecool.employeemanager.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.LocalDate;
 
 public class Employee {
 
+    @JsonProperty("ID")
     private int id;
+    @JsonProperty("Name")
     private String name;
+    @JsonProperty("Email")
     private String email;
-    private String department;
+    @JsonProperty("Phone number")
     private String phoneNumber;
+    @JsonProperty("Date of birth")
     private LocalDate dateOfBirth;
-    private ClearanceLevel clearanceLevel;
+    @JsonProperty("Department")
+    private String department;
+    @JsonProperty("Position")
     private String position;
+    @JsonProperty("Clearance level")
+    private ClearanceLevel clearanceLevel;
 
     public Employee() {
     }
