@@ -36,7 +36,11 @@ public class EmpRepImplementation implements EmployeeRepository {
 
     @Override
     public void deleteById(int id) {
-
+        Employee employeeToBeDeleted = employees.stream()
+                .filter(employee -> employee.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("Employee not found by id - " + id));
+        employees.remove(employeeToBeDeleted);
     }
 
     @Override
