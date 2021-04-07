@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -17,8 +18,14 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    public void addEmployee(Employee employee) {
-        employeeRepository.save(employee);
+    public Employee addEmployee(Employee employee) {
+        Optional<Employee> employeeOptional = employeeRepository.findByEmail(employee.getEmail());
+        if(employeeOptional.isEmpty()){
+            employeeRepository.save(employee);
+            return employee;
+        } else {
+            throw new IllegalArgumentException("Email address already in use.");
+        }
     }
 
     public List<Employee> findAllEmployees() {
