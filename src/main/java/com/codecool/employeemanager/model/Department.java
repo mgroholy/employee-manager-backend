@@ -1,5 +1,7 @@
 package com.codecool.employeemanager.model;
 
+import java.util.Objects;
+
 public class Department {
 
     private int id;
@@ -31,5 +33,18 @@ public class Department {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Department that = (Department) o;
+        return name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }
