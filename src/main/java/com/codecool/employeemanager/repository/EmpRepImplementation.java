@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class EmpRepImplementation implements EmployeeRepository{
@@ -48,8 +49,9 @@ public class EmpRepImplementation implements EmployeeRepository{
     }
 
     @Override
-    public Employee findByEmail(String email) {
-        return null;
+    public Optional<Employee> findByEmail(String email) {
+        Employee foundEmployee =  employees.stream().filter(employee -> employee.getEmail().equals(email)).findFirst().orElse(null);
+        return Optional.ofNullable(foundEmployee);
     }
 
     @Override
