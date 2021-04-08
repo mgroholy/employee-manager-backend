@@ -38,8 +38,8 @@ public class EmployeeController {
     }
 
     @PutMapping("/employees/{id}/update")
-    public void updateEmployee(@PathVariable int id, @RequestBody Employee employee){
-
+    public void updateEmployee(@RequestBody Employee employee){
+        employeeService.updateEmployee(employee);
     }
 
     @DeleteMapping("/employees/{id}/delete")
