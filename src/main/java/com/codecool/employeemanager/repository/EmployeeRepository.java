@@ -1,6 +1,5 @@
 package com.codecool.employeemanager.repository;
 
-import com.codecool.employeemanager.model.Department;
 import com.codecool.employeemanager.model.Employee;
 
 import java.util.List;

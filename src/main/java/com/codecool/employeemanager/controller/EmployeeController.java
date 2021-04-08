@@ -3,14 +3,15 @@ package com.codecool.employeemanager.controller;
 import com.codecool.employeemanager.model.Employee;
 import com.codecool.employeemanager.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.*;
+import javax.validation.Valid;
 
 @CrossOrigin
 @RestController
@@ -52,13 +53,19 @@ public class EmployeeController {
         return employeeService.addEmployee(employee);
     }
 
-    @RequestMapping(value = "/employees/{id}", method = { RequestMethod.GET, RequestMethod.DELETE })
-    public Employee getEmployeeById(@PathVariable int id, HttpServletRequest request) {
-        if (request.getMethod().equals("GET")) {
-            return employeeService.findEmployeeById(id);
-        } else {
-            employeeService.deleteEmployeeById(id);
-            return null;
-        }
+    @GetMapping("/employees/{id}")
+    public Employee getEmployeeById(@PathVariable int id) {
+        return employeeService.findEmployeeById(id);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @PutMapping("/employees/{id}/update")
+    public void updateEmployee(@Valid @RequestBody Employee employee){
+        employeeService.updateEmployee(employee);
+    }
+
+    @DeleteMapping("/employees/{id}/delete")
+    public void deleteEmployee(@PathVariable int id){
+        employeeService.deleteEmployeeById(id);
     }
 }

@@ -33,7 +33,9 @@ public class EmpRepImplementation implements EmployeeRepository {
 
     @Override
     public void update(Employee employee) {
-
+        int id = employee.getId();
+        deleteById(id);
+        employees.add(employee);
     }
 
     @Override
