@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
@@ -38,5 +39,9 @@ public class EmployeeService {
 
     public void deleteEmployeeById(int id) {
         employeeRepository.deleteById(id);
+    }
+
+    public List<Employee> findByDepartment(String department) {
+        return employeeRepository.findByDepartment(department);
     }
 }
