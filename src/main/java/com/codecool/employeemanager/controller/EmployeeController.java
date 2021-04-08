@@ -31,14 +31,17 @@ public class EmployeeController {
     @GetMapping("/employees")
     public List<Employee> getEmployees(@RequestParam Map<String, String> params){
         if(params.containsKey("department")){
+            if(params.get("department").toLowerCase().equals("all")){
+                return employeeService.findAllEmployees();
+            }
             return employeeService.findByDepartment(params.get("department"));
         } else {
             if(params.containsKey("id")){
                 return Collections.singletonList(employeeService.findEmployeeById(Integer.parseInt(params.get("id"))));
             } else if(params.containsKey("name")){
-                return employeeService.findAllByName(params.get("id"));
+                return employeeService.findAllByName(params.get("name"));
             } else if(params.containsKey("email")){
-                System.out.println("");
+                return Collections.singletonList(employeeService.findEmployeeByEmail(params.get("email")))  ;
             }
         }
         return employeeService.findAllEmployees();
