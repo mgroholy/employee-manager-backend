@@ -66,7 +66,7 @@ public class EmpRepImplementation implements EmployeeRepository {
 
     @Override
     public List<Employee> findByName(String name) {
-        return null;
+        return employees.stream().filter(employee -> employee.getName().toLowerCase().contains(name.toLowerCase())).collect(Collectors.toList());
     }
 
     @Override
