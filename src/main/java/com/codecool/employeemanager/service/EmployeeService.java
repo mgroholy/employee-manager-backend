@@ -44,4 +44,8 @@ public class EmployeeService {
     public List<Employee> findByDepartment(String department) {
         return employeeRepository.findByDepartment(department);
     }
+
+    public List<Employee> findAllByName(String name){
+        return employeeRepository.findByName(name);
+    }
 }
