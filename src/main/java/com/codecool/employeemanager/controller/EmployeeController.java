@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @CrossOrigin
@@ -33,13 +32,18 @@ public class EmployeeController {
         return employeeService.addEmployee(employee);
     }
 
-    @RequestMapping(value = "/employees/{id}", method = { RequestMethod.GET, RequestMethod.DELETE })
-    public Employee getEmployeeById(@PathVariable int id, HttpServletRequest request) {
-        if (request.getMethod().equals("GET")) {
-            return employeeService.findEmployeeById(id);
-        } else {
-            employeeService.deleteEmployeeById(id);
-            return null;
-        }
+    @GetMapping("/employees/{id}")
+    public Employee getEmployeeById(@PathVariable int id) {
+        return employeeService.findEmployeeById(id);
+    }
+
+    @PutMapping("/employees/{id}/update")
+    public void updateEmployee(@PathVariable int id, @RequestBody Employee employee){
+
+    }
+
+    @DeleteMapping("/employees/{id}/delete")
+    public void deleteEmployee(@PathVariable int id){
+        employeeService.deleteEmployeeById(id);
     }
 }
