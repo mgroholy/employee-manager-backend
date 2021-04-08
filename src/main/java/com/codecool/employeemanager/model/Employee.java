@@ -2,24 +2,41 @@ package com.codecool.employeemanager.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 public class Employee {
 
     @JsonProperty("ID")
     private int id;
+
+    @NotBlank(message = "The name field is required.")
     @JsonProperty("Name")
     private String name;
+
+    @Email(message = "Invalid email format.")
+    @NotBlank(message = "The email field is required.")
     @JsonProperty("Email")
     private String email;
+
+    @Pattern(regexp = "\\d{11}", message = "Phone number should have 11 digits.")
+    @NotBlank(message = "The phone number field is required.")
     @JsonProperty("Phone number")
     private String phoneNumber;
+
+    @NotNull(message = "The date of birth field is required.")
     @JsonProperty("Date of birth")
     private LocalDate dateOfBirth;
+
+    @NotBlank(message = "The department field is required.")
     @JsonProperty("Department")
     private String department;
+
+    @NotBlank(message = "The position field is required.")
     @JsonProperty("Position")
     private String position;
+
+    @NotNull(message = "The clearance level field is required.")
     @JsonProperty("Clearance level")
     private ClearanceLevel clearanceLevel;
 
