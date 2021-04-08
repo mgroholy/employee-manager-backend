@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -42,5 +43,22 @@ public class EmployeeService {
 
     public void updateEmployee(Employee employee) {
         employeeRepository.update(employee);
+    }
+
+    public List<Employee> findByDepartment(String department) {
+        return employeeRepository.findByDepartment(department);
+    }
+
+    public List<Employee> findAllByName(String name){
+        return employeeRepository.findByName(name);
+    }
+
+    public Employee findEmployeeByEmail(String email){
+        Optional<Employee> employee = employeeRepository.findByEmail(email);
+        if(employee.isPresent()){
+            return employee.get();
+        } else {
+            throw new NoSuchElementException("Employee not found by email - " + email);
+        }
     }
 }

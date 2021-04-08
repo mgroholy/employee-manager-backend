@@ -28,9 +28,10 @@ public class Employee {
     @JsonProperty("Date of birth")
     private LocalDate dateOfBirth;
 
-    @NotBlank(message = "The department field is required.")
+    // FIXME: unhandled IllegalStateException
+    @NotNull(message = "The department field is required.")
     @JsonProperty("Department")
-    private String department;
+    private Department department;
 
     @NotBlank(message = "The position field is required.")
     @JsonProperty("Position")
@@ -43,7 +44,7 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(String name, String email, String department, String phoneNumber, LocalDate dateOfBirth, ClearanceLevel clearanceLevel, String position) {
+    public Employee(String name, String email, Department department, String phoneNumber, LocalDate dateOfBirth, ClearanceLevel clearanceLevel, String position) {
         this.name = name;
         this.email = email;
         this.department = department;
@@ -53,7 +54,7 @@ public class Employee {
         this.position = position;
     }
 
-    public Employee(int id, String name, String email, String department, String phoneNumber, LocalDate dateOfBirth, ClearanceLevel clearanceLevel, String position) {
+    public Employee(int id, String name, String email, Department department, String phoneNumber, LocalDate dateOfBirth, ClearanceLevel clearanceLevel, String position) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -88,11 +89,11 @@ public class Employee {
         this.email = email;
     }
 
-    public String getDepartment() {
+    public Department getDepartment() {
         return department;
     }
 
-    public void setDepartment(String department) {
+    public void setDepartment(Department department) {
         this.department = department;
     }
 

@@ -14,6 +14,6 @@ public interface EmployeeRepository {
     Employee findById(int id);
     Optional<Employee> findByEmail(String email);
     List<Employee> findByName(String name);
-    List<Employee> findByDepartment(String departmentName);
+    List<Employee> findByDepartment(String department);
 
 }
