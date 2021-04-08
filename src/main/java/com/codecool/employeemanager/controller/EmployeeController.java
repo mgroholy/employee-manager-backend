@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import java.util.*;
 
 @CrossOrigin
 @RestController
@@ -29,8 +29,22 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees")
-    public List<Employee> getEmployees(@RequestParam String department){
-        return employeeService.findByDepartment(department);
+    public List<Employee> getEmployees(@RequestParam Map<String, String> params){
+        if(params.containsKey("department")){
+            if(params.get("department").toLowerCase().equals("all")){
+                return employeeService.findAllEmployees();
+            }
+            return employeeService.findByDepartment(params.get("department"));
+        } else {
+            if(params.containsKey("id")){
+                return Collections.singletonList(employeeService.findEmployeeById(Integer.parseInt(params.get("id"))));
+            } else if(params.containsKey("name")){
+                return employeeService.findAllByName(params.get("name"));
+            } else if(params.containsKey("email")){
+                return Collections.singletonList(employeeService.findEmployeeByEmail(params.get("email")))  ;
+            }
+        }
+        return employeeService.findAllEmployees();
     }
 
     @PostMapping("/employees")
