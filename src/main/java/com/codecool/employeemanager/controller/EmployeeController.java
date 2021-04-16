@@ -1,5 +1,6 @@
 package com.codecool.employeemanager.controller;
 
+import com.codecool.employeemanager.model.ClearanceLevel;
 import com.codecool.employeemanager.model.Employee;
 import com.codecool.employeemanager.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,4 +69,10 @@ public class EmployeeController {
     public void deleteEmployee(@PathVariable int id){
         employeeService.deleteEmployeeById(id);
     }
+
+    @GetMapping("/levels")
+    public ClearanceLevel[] getAllClearanceLevels() {
+        return ClearanceLevel.values();
+    }
+
 }
