@@ -24,12 +24,9 @@ public class Employee {
     @JsonProperty("Phone number")
     private String phoneNumber;
 
-    @NotNull(message = "The date of birth field is required.")
     @JsonProperty("Date of birth")
     private LocalDate dateOfBirth;
 
-    // FIXME: unhandled IllegalStateException
-    @NotNull(message = "The department field is required.")
     @JsonProperty("Department")
     private Department department;
 
@@ -37,7 +34,6 @@ public class Employee {
     @JsonProperty("Position")
     private String position;
 
-    @NotNull(message = "The clearance level field is required.")
     @JsonProperty("Clearance level")
     private ClearanceLevel clearanceLevel;
 
