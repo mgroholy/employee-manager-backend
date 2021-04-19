@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.NoSuchElementException;
 
 @Service
@@ -24,5 +25,14 @@ public class DepartmentService {
 
     public Department findByName(String name) {
         return departmentRepository.findByName(name).orElseThrow(() -> new NoSuchElementException("Department not found by name - " + name));
+    }
+
+    public Department addNewDepartment(Department department){
+        Optional<Department> departmentOptional = departmentRepository.findByName(department.getName());
+        if(departmentOptional.isPresent()){
+            throw new IllegalArgumentException("Department with the name \"" + department.getName() + "\" already exists.");
+        }
+        departmentRepository.save(department);
+        return department;
     }
 }
