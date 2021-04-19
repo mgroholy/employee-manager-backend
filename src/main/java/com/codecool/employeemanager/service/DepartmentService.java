@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DepartmentService {
@@ -20,5 +21,14 @@ public class DepartmentService {
 
     public List<Department> getAllDepartments(){
         return departmentRepository.findAll();
+    }
+
+    public Department addNewDepartment(Department department){
+        Optional<Department> departmentOptional = departmentRepository.findByName(department.getName());
+        if(departmentOptional.isPresent()){
+            throw new IllegalArgumentException("Department with the name \"" + department.getName() + "\" already exists.");
+        }
+        departmentRepository.save(department);
+        return department;
     }
 }
