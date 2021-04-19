@@ -14,9 +14,12 @@ public class DepRepImplementation implements DepartmentRepository{
 
     public DepRepImplementation() {
         this.departments = new ArrayList<>();
-        save(new Department("IT"));
-        save(new Department("HR"));
-        save(new Department("Sales"));
+        Department IT = Department.builder().name("IT").build();
+        Department HR = Department.builder().name("HR").build();
+        Department SALES = Department.builder().name("Sales").build();
+        save(IT);
+        save(HR);
+        save(SALES);
     }
 
     @Override

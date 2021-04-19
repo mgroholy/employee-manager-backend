@@ -18,10 +18,12 @@ public class EmpRepImplementation implements EmployeeRepository {
     private List<Employee> employees = new ArrayList<>();
 
     public EmpRepImplementation() {
-        // for testing purposes
-        save(new Employee("John Doe", "john@doe.com", new Department("IT"), "36301234567", LocalDate.parse("1970-02-03"), ClearanceLevel.USER, "Developer"));
-        save(new Employee("Jane Doe", "jane@doe.com", new Department("HR"), "36305671234", LocalDate.parse("1985-10-10"), ClearanceLevel.ADMIN, "Recruiter"));
-        save(new Employee("Jack Smith", "jack@smith.com", new Department("Sales"), "36309876543", LocalDate.parse("1960-05-25"), ClearanceLevel.SUPERVISOR, "Purchasing leader"));
+        Department IT = Department.builder().name("IT").build();
+        Department HR = Department.builder().name("HR").build();
+        Department SALES = Department.builder().name("Sales").build();
+        save(Employee.builder().name("John Doe").email("john@doe.com").department(IT).phoneNumber("36301234567").dateOfBirth(LocalDate.parse("1970-02-03")).clearanceLevel(ClearanceLevel.USER).position("Developer").build());
+        save(Employee.builder().name("Jane Doe").email("jane@doe.com").department(HR).phoneNumber("36305671234").dateOfBirth(LocalDate.parse("1985-10-10")).clearanceLevel(ClearanceLevel.ADMIN).position("Recruiter").build());
+        save(Employee.builder().name("Jack Smith").email("jack@smith.com").department(SALES).phoneNumber("36309876543").dateOfBirth(LocalDate.parse("1960-05-25")).clearanceLevel(ClearanceLevel.SUPERVISOR).position("Purchasing leader").build());
     }
 
     @Override
