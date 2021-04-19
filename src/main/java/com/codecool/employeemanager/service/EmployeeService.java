@@ -1,5 +1,6 @@
 package com.codecool.employeemanager.service;
 
+import com.codecool.employeemanager.model.Department;
 import com.codecool.employeemanager.model.Employee;
 import com.codecool.employeemanager.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +14,19 @@ import java.util.Optional;
 public class EmployeeService {
 
     private EmployeeRepository employeeRepository;
+    private DepartmentService departmentService;
 
     @Autowired
-    public EmployeeService(EmployeeRepository employeeRepository) {
+    public EmployeeService(EmployeeRepository employeeRepository, DepartmentService departmentService) {
         this.employeeRepository = employeeRepository;
+        this.departmentService = departmentService;
     }
 
     public Employee addEmployee(Employee employee) {
         Optional<Employee> employeeOptional = employeeRepository.findByEmail(employee.getEmail());
         if(employeeOptional.isEmpty()){
+            Department department = departmentService.findByName(employee.getDepartment().getName());
+            employee.setDepartment(department);
             employeeRepository.save(employee);
             return employee;
         } else {
@@ -34,7 +39,7 @@ public class EmployeeService {
     }
 
     public Employee findEmployeeById(int id) {
-        return employeeRepository.findById(id);
+        return employeeRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Employee not found by id - " + id));
     }
 
     public void deleteEmployeeById(int id) {
@@ -42,15 +47,17 @@ public class EmployeeService {
     }
 
     public void updateEmployee(Employee employee) {
-        employeeRepository.update(employee);
+        Department department = departmentService.findByName(employee.getDepartment().getName());
+        employee.setDepartment(department);
+        employeeRepository.save(employee);
     }
 
     public List<Employee> findByDepartment(String department) {
-        return employeeRepository.findByDepartment(department);
+        return employeeRepository.findByDepartmentName(department);
     }
 
     public List<Employee> findAllByName(String name){
-        return employeeRepository.findByName(name);
+        return employeeRepository.findByNameContaining(name);
     }
 
     public Employee findEmployeeByEmail(String email){
