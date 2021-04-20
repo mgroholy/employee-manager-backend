@@ -48,4 +48,9 @@ public class Employee {
     @Enumerated(EnumType.STRING)
     @JsonProperty("Clearance level")
     private ClearanceLevel clearanceLevel;
+
+    @Enumerated(EnumType.STRING)
+    @JsonProperty("Status")
+    private Status status;
+
 }

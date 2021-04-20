@@ -2,6 +2,7 @@ package com.codecool.employeemanager.controller;
 
 import com.codecool.employeemanager.model.ClearanceLevel;
 import com.codecool.employeemanager.model.Employee;
+import com.codecool.employeemanager.model.Status;
 import com.codecool.employeemanager.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -75,6 +76,11 @@ public class EmployeeController {
     @GetMapping("/levels")
     public ClearanceLevel[] getAllClearanceLevels() {
         return ClearanceLevel.values();
+    }
+
+    @GetMapping("/statuses")
+    public Status[] getAllStatuses(){
+        return Status.values();
     }
 
 }
