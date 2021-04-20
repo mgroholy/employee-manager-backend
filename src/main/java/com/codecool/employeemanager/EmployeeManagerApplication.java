@@ -3,6 +3,7 @@ package com.codecool.employeemanager;
 import com.codecool.employeemanager.model.ClearanceLevel;
 import com.codecool.employeemanager.model.Department;
 import com.codecool.employeemanager.model.Employee;
+import com.codecool.employeemanager.model.Status;
 import com.codecool.employeemanager.repository.DepartmentRepository;
 import com.codecool.employeemanager.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +41,9 @@ public class EmployeeManagerApplication {
             Department SALES = Department.builder().name("Sales").build();
             departmentRepository.saveAll(Arrays.asList(IT, HR, SALES));
 
-            Employee john = Employee.builder().name("John Doe").email("john@doe.com").department(IT).phoneNumber("36301234567").dateOfBirth(LocalDate.parse("1970-02-03")).clearanceLevel(ClearanceLevel.USER).position("Developer").build();
-            Employee jane = Employee.builder().name("Jane Doe").email("jane@doe.com").department(HR).phoneNumber("36305671234").dateOfBirth(LocalDate.parse("1985-10-10")).clearanceLevel(ClearanceLevel.ADMIN).position("Recruiter").build();
-            Employee jack = Employee.builder().name("Jack Smith").email("jack@smith.com").department(SALES).phoneNumber("36309876543").dateOfBirth(LocalDate.parse("1960-05-25")).clearanceLevel(ClearanceLevel.SUPERVISOR).position("Purchasing leader").build();
+            Employee john = Employee.builder().name("John Doe").email("john@doe.com").department(IT).phoneNumber("36301234567").dateOfBirth(LocalDate.parse("1970-02-03")).clearanceLevel(ClearanceLevel.USER).position("Developer").status(Status.ACTIVE).build();
+            Employee jane = Employee.builder().name("Jane Doe").email("jane@doe.com").department(HR).phoneNumber("36305671234").dateOfBirth(LocalDate.parse("1985-10-10")).clearanceLevel(ClearanceLevel.ADMIN).position("Recruiter").status(Status.ACTIVE).build();
+            Employee jack = Employee.builder().name("Jack Smith").email("jack@smith.com").department(SALES).phoneNumber("36309876543").dateOfBirth(LocalDate.parse("1960-05-25")).clearanceLevel(ClearanceLevel.SUPERVISOR).position("Purchasing leader").status(Status.ACTIVE).build();
             employeeRepository.saveAll(Arrays.asList(john, jane, jack));
         };
     }

@@ -2,6 +2,7 @@ package com.codecool.employeemanager.service;
 
 import com.codecool.employeemanager.model.Department;
 import com.codecool.employeemanager.model.Employee;
+import com.codecool.employeemanager.model.Status;
 import com.codecool.employeemanager.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ public class EmployeeService {
         if(employeeOptional.isEmpty()){
             Department department = departmentService.findByName(employee.getDepartment().getName());
             employee.setDepartment(department);
+            employee.setStatus(Status.ACTIVE);
             employeeRepository.save(employee);
             return employee;
         } else {
