@@ -31,26 +31,28 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees")
-    public List<Employee> getEmployees(@RequestParam Map<String, String> params){
-        if(params.containsKey("department")){
-            if(params.get("department").toLowerCase().equals("all")){
+    public List<Employee> getEmployees(@RequestParam Map<String, String> params) {
+        if (params.size() == 0) {
+            return employeeService.findAllEmployees();
+        }
+        if (params.containsKey("department")) {
+            if (params.get("department").toLowerCase().equals("all")) {
                 return employeeService.findAllEmployees();
             }
             return employeeService.findByDepartment(params.get("department"));
+        } else if (params.containsKey("id")) {
+            return Collections.singletonList(employeeService.findEmployeeById(Integer.parseInt(params.get("id"))));
+        } else if (params.containsKey("name")) {
+            return employeeService.findAllByName(params.get("name"));
+        } else if (params.containsKey("email")) {
+            return Collections.singletonList(employeeService.findEmployeeByEmail(params.get("email")));
         } else {
-            if(params.containsKey("id")){
-                return Collections.singletonList(employeeService.findEmployeeById(Integer.parseInt(params.get("id"))));
-            } else if(params.containsKey("name")){
-                return employeeService.findAllByName(params.get("name"));
-            } else if(params.containsKey("email")){
-                return Collections.singletonList(employeeService.findEmployeeByEmail(params.get("email")))  ;
-            }
+            throw new IllegalArgumentException("Query parameter not supported.");
         }
-        return employeeService.findAllEmployees();
     }
 
     @PostMapping("/employees")
-    public Employee createNewEmployee(@RequestBody Employee employee){
+    public Employee createNewEmployee(@RequestBody Employee employee) {
         return employeeService.addEmployee(employee);
     }
 
@@ -61,12 +63,12 @@ public class EmployeeController {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @PutMapping("/employees/{id}/update")
-    public void updateEmployee(@Valid @RequestBody Employee employee){
+    public void updateEmployee(@Valid @RequestBody Employee employee) {
         employeeService.updateEmployee(employee);
     }
 
     @DeleteMapping("/employees/{id}/delete")
-    public void deleteEmployee(@PathVariable int id){
+    public void deleteEmployee(@PathVariable int id) {
         employeeService.deleteEmployeeById(id);
     }
 
