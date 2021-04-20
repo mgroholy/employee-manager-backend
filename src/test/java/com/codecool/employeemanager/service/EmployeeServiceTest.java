@@ -18,12 +18,14 @@ import static org.mockito.Mockito.when;
 class EmployeeServiceTest {
 
     private static EmployeeService employeeService;
+    private static DepartmentService departmentService;
     private static EmployeeRepository mockEmployeeRepository;
 
     @BeforeAll
     public static void setup(){
         mockEmployeeRepository = mock(EmployeeRepository.class);
-        employeeService = new EmployeeService(mockEmployeeRepository);
+        departmentService = mock(DepartmentService.class);
+        employeeService = new EmployeeService(mockEmployeeRepository, departmentService);
     }
 
     @Test
@@ -37,6 +39,7 @@ class EmployeeServiceTest {
                 .phoneNumber("12345678910")
                 .position("test")
                 .build();
+        when(departmentService.findByName("HR")).thenReturn(new Department("HR"));
         assertEquals(testEmployee, employeeService.addEmployee(testEmployee));
     }
 

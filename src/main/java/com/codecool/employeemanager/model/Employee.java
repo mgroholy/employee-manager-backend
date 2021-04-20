@@ -1,11 +1,9 @@
 package com.codecool.employeemanager.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 
@@ -13,8 +11,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity
 public class Employee {
 
+    @Id
+    @GeneratedValue
     @JsonProperty("ID")
     private int id;
 
@@ -35,6 +36,8 @@ public class Employee {
     @JsonProperty("Date of birth")
     private LocalDate dateOfBirth;
 
+    @ManyToOne
+    @EqualsAndHashCode.Exclude
     @JsonProperty("Department")
     private Department department;
 
@@ -42,6 +45,7 @@ public class Employee {
     @JsonProperty("Position")
     private String position;
 
+    @Enumerated(EnumType.STRING)
     @JsonProperty("Clearance level")
     private ClearanceLevel clearanceLevel;
 }

@@ -1,20 +1,33 @@
 package com.codecool.employeemanager.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Builder
+@Entity
 public class Department {
 
+    @Id
+    @GeneratedValue
     private int id;
+
     @NonNull
     private String name;
 
+    @OneToMany(mappedBy = "department", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @Singular
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @JsonIgnore
+    private Set<Employee> employees;
 
     @Override
     public boolean equals(Object o) {
