@@ -5,6 +5,7 @@ import com.codecool.employeemanager.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.NoSuchElementException;
@@ -32,6 +33,7 @@ public class DepartmentService {
         if(departmentOptional.isPresent()){
             throw new IllegalArgumentException("Department with the name \"" + department.getName() + "\" already exists.");
         }
+        department.setEmployees(new HashSet<>());
         departmentRepository.save(department);
         return department;
     }
