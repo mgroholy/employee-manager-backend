@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 @CrossOrigin
@@ -33,23 +34,37 @@ public class EmployeeController {
 
     @GetMapping("/employees")
     public List<Employee> getEmployees(@RequestParam Map<String, String> params) {
-        if (params.size() == 0) {
-            return employeeService.findAllEmployees();
+        List<String> validQueryTypes = Arrays.asList("department", "id", "name", "email", "showInactive");
+        for(String param: params.keySet()){
+            if(!validQueryTypes.contains(param)){
+                throw new IllegalArgumentException("Query type not supported.");
+            }
         }
+        List<Employee> employees = employeeService.findAllEmployees();
         if (params.containsKey("department")) {
             if (params.get("department").toLowerCase().equals("all")) {
-                return employeeService.findAllEmployees();
+                employees = employeeService.findAllEmployees();
+            } else {
+                employees = employeeService.findByDepartment(params.get("department"));
             }
-            return employeeService.findByDepartment(params.get("department"));
         } else if (params.containsKey("id")) {
-            return Collections.singletonList(employeeService.findEmployeeById(Integer.parseInt(params.get("id"))));
+            employees = Collections.singletonList(employeeService.findEmployeeById(Integer.parseInt(params.get("id"))));
         } else if (params.containsKey("name")) {
-            return employeeService.findAllByName(params.get("name"));
+            employees = employeeService.findAllByName(params.get("name"));
         } else if (params.containsKey("email")) {
-            return Collections.singletonList(employeeService.findEmployeeByEmail(params.get("email")));
-        } else {
-            throw new IllegalArgumentException("Query parameter not supported.");
+            employees = Collections.singletonList(employeeService.findEmployeeByEmail(params.get("email")));
         }
+        if(params.containsKey("showInactive")) {
+            if(params.get("showInactive").equals("true")){
+                return employees;
+            }
+        }
+        List<Employee> activeEmployees = employees.stream().filter(employee -> employee.getStatus() == Status.ACTIVE).collect(Collectors.toList());
+        if(activeEmployees.size() == 0 && employees.size() > 0){
+            throw new NoSuchElementException("No active employee found.");
+        }
+        return activeEmployees;
+
     }
 
     @PostMapping("/employees")
