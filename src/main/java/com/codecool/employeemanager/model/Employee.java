@@ -53,6 +53,9 @@ public class Employee {
     @JsonProperty("Status")
     private Status status;
 
+    @JsonProperty("Date of hire")
+    private LocalDate dateOfHire;
+
     @JsonProperty("Date of termination")
     private LocalDate dateOfTermination;
 
