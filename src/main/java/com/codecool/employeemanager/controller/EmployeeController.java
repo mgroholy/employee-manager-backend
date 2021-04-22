@@ -5,7 +5,6 @@ import com.codecool.employeemanager.model.Employee;
 import com.codecool.employeemanager.model.Status;
 import com.codecool.employeemanager.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import javax.validation.Valid;
 
 @CrossOrigin
 @RestController
@@ -75,12 +73,6 @@ public class EmployeeController {
     @GetMapping("/employees/{id}")
     public Employee getEmployeeById(@PathVariable int id) {
         return employeeService.findEmployeeById(id);
-    }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    @PutMapping("/employees/{id}/update")
-    public void updateEmployee(@Valid @RequestBody Employee employee) {
-        employeeService.updateEmployee(employee);
     }
 
     @PatchMapping("/employees/{id}/partial-update")

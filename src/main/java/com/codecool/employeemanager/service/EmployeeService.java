@@ -48,12 +48,6 @@ public class EmployeeService {
         employeeRepository.deleteById(id);
     }
 
-    public void updateEmployee(Employee employee) {
-        Department department = departmentService.findByName(employee.getDepartment().getName());
-        employee.setDepartment(department);
-        employeeRepository.save(employee);
-    }
-
     public void updateEmployeeDetail(int id, Map<String, String> data) {
         Employee foundEmployee = findEmployeeById(id);
         boolean hasUpdate = false;
