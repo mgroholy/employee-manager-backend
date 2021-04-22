@@ -83,6 +83,11 @@ public class EmployeeController {
         employeeService.updateEmployee(employee);
     }
 
+    @PatchMapping("/employees/{id}/partial-update")
+    public void setPartialEmployeeUpdate(@PathVariable int id, @RequestBody Map<String, String> data) {
+        employeeService.updateEmployeeDetail(id, data);
+    }
+
     @DeleteMapping("/employees/{id}/delete")
     public void deleteEmployee(@PathVariable int id) {
         employeeService.deleteEmployeeById(id);
