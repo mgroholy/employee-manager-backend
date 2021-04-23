@@ -5,6 +5,8 @@ import com.codecool.employeemanager.model.Department;
 import com.codecool.employeemanager.model.Employee;
 import com.codecool.employeemanager.model.Status;
 import com.codecool.employeemanager.repository.EmployeeRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ import java.util.*;
 
 @Service
 public class EmployeeService {
+
+    private static final Logger log = LoggerFactory.getLogger(EmployeeService.class);
 
     private EmployeeRepository employeeRepository;
     private DepartmentService departmentService;
@@ -67,12 +71,12 @@ public class EmployeeService {
                 case "Status": foundEmployee.setStatus(Status.valueOf(fieldValue)); break;
                 case "Date of hire": foundEmployee.setDateOfHire(LocalDate.parse(fieldValue)); break;
                 case "Date of termination":
-                    if (fieldValue == null) {
-                        foundEmployee.setDateOfTermination(null);
-                    } else {
-                        foundEmployee.setDateOfTermination(LocalDate.parse(fieldValue));
-                    }
+                    if (fieldValue == null) foundEmployee.setDateOfTermination(null);
+                    else foundEmployee.setDateOfTermination(LocalDate.parse(fieldValue));
                     break;
+                default:
+                    log.error("Update error : case " + fieldName + " not found in switch.");
+                    throw new IllegalArgumentException("An error occurred on our side.");
             }
         }
 
