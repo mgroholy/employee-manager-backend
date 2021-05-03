@@ -1,9 +1,8 @@
 package com.codecool.employeemanager.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -30,5 +29,9 @@ public class UserModel {
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private List<ClearanceLevel> levels = new ArrayList<>();
+
+    @OneToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Employee employee;
 
 }
