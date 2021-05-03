@@ -41,9 +41,9 @@ public class EmployeeManagerApplication {
             Department SALES = Department.builder().name("Sales").build();
             departmentRepository.saveAll(Arrays.asList(IT, HR, SALES));
 
-            Employee john = Employee.builder().name("John Doe").email("john@doe.com").department(IT).phoneNumber("36301234567").dateOfBirth(LocalDate.parse("1970-02-03")).clearanceLevel(ClearanceLevel.USER).position("Developer").status(Status.ACTIVE).dateOfHire(LocalDate.of(2020, 2, 15)).build();
-            Employee jane = Employee.builder().name("Jane Doe").email("jane@doe.com").department(HR).phoneNumber("36305671234").dateOfBirth(LocalDate.parse("1985-10-10")).clearanceLevel(ClearanceLevel.ADMIN).position("Recruiter").status(Status.ACTIVE).dateOfHire(LocalDate.of(2018, 9, 1)).build();
-            Employee jack = Employee.builder().name("Jack Smith").email("jack@smith.com").department(SALES).phoneNumber("36309876543").dateOfBirth(LocalDate.parse("1960-05-25")).clearanceLevel(ClearanceLevel.SUPERVISOR).position("Purchasing leader").status(Status.ACTIVE).dateOfHire(LocalDate.of(2005, 6, 10)).build();
+            Employee john = Employee.builder().name("John Doe").email("john@doe.com").department(IT).phoneNumber("36301234567").dateOfBirth(LocalDate.parse("1970-02-03")).clearanceLevel(ClearanceLevel.ROLE_USER).position("Developer").status(Status.ACTIVE).dateOfHire(LocalDate.of(2020, 2, 15)).build();
+            Employee jane = Employee.builder().name("Jane Doe").email("jane@doe.com").department(HR).phoneNumber("36305671234").dateOfBirth(LocalDate.parse("1985-10-10")).clearanceLevel(ClearanceLevel.ROLE_ADMIN).position("Recruiter").status(Status.ACTIVE).dateOfHire(LocalDate.of(2018, 9, 1)).build();
+            Employee jack = Employee.builder().name("Jack Smith").email("jack@smith.com").department(SALES).phoneNumber("36309876543").dateOfBirth(LocalDate.parse("1960-05-25")).clearanceLevel(ClearanceLevel.ROLE_SUPERVISOR).position("Purchasing leader").status(Status.ACTIVE).dateOfHire(LocalDate.of(2005, 6, 10)).build();
             employeeRepository.saveAll(Arrays.asList(john, jane, jack));
         };
     }
