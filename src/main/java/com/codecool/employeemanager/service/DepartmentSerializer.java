@@ -1,7 +1,6 @@
 package com.codecool.employeemanager.service;
 
 import com.codecool.employeemanager.model.Department;
-import com.codecool.employeemanager.model.Employee;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
