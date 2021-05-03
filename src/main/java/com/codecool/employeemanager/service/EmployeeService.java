@@ -1,18 +1,22 @@
 package com.codecool.employeemanager.service;
 
+import com.codecool.employeemanager.model.ClearanceLevel;
 import com.codecool.employeemanager.model.Department;
 import com.codecool.employeemanager.model.Employee;
 import com.codecool.employeemanager.model.Status;
 import com.codecool.employeemanager.repository.EmployeeRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.*;
 
 @Service
 public class EmployeeService {
+
+    private static final Logger log = LoggerFactory.getLogger(EmployeeService.class);
 
     private EmployeeRepository employeeRepository;
     private DepartmentService departmentService;
@@ -48,10 +52,35 @@ public class EmployeeService {
         employeeRepository.deleteById(id);
     }
 
-    public void updateEmployee(Employee employee) {
-        Department department = departmentService.findByName(employee.getDepartment().getName());
-        employee.setDepartment(department);
-        employeeRepository.save(employee);
+    public void updateEmployeeDetail(int id, Map<String, String> data) {
+        Employee foundEmployee = findEmployeeById(id);
+        boolean hasUpdate = false;
+
+        for (String fieldName : data.keySet()) {
+            hasUpdate = true;
+            String fieldValue = data.get(fieldName);
+
+            switch (fieldName) {
+                case "Name": foundEmployee.setName(fieldValue); break;
+                case "Email": foundEmployee.setEmail(fieldValue); break;
+                case "Phone number": foundEmployee.setPhoneNumber(fieldValue); break;
+                case "Date of birth": foundEmployee.setDateOfBirth(LocalDate.parse(fieldValue)); break;
+                case "Department": foundEmployee.setDepartment(departmentService.findByName(fieldValue)); break;
+                case "Position": foundEmployee.setPosition(fieldValue); break;
+                case "Clearance level": foundEmployee.setClearanceLevel(ClearanceLevel.valueOf(fieldValue)); break;
+                case "Status": foundEmployee.setStatus(Status.valueOf(fieldValue)); break;
+                case "Date of hire": foundEmployee.setDateOfHire(LocalDate.parse(fieldValue)); break;
+                case "Date of termination":
+                    if (fieldValue == null) foundEmployee.setDateOfTermination(null);
+                    else foundEmployee.setDateOfTermination(LocalDate.parse(fieldValue));
+                    break;
+                default:
+                    log.error("Update error : case " + fieldName + " not found in switch.");
+                    throw new IllegalArgumentException("An error occurred on our side.");
+            }
+        }
+
+        if (hasUpdate) employeeRepository.save(foundEmployee);
     }
 
     public List<Employee> findByDepartment(String department) {
