@@ -34,7 +34,7 @@ class EmployeeServiceTest {
         Department department = Department.builder().name("HR").build();
         Employee testEmployee = Employee.builder().name("Test Employee").email("test@employee.com")
                 .dateOfBirth(LocalDate.of(1990,1, 1))
-                .clearanceLevel(ClearanceLevel.ROLE_ADMIN)
+                .clearanceLevel(ClearanceLevel.ADMIN)
                 .department(department)
                 .phoneNumber("12345678910")
                 .position("test")
@@ -48,7 +48,7 @@ class EmployeeServiceTest {
         Department department = Department.builder().name("HR").build();
         Employee testEmployee = Employee.builder().name("Test Employee").email("test@employee.com")
                 .dateOfBirth(LocalDate.of(1990,1, 1))
-                .clearanceLevel(ClearanceLevel.ROLE_ADMIN)
+                .clearanceLevel(ClearanceLevel.ADMIN)
                 .department(department)
                 .phoneNumber("12345678910")
                 .position("test")
@@ -68,7 +68,7 @@ class EmployeeServiceTest {
         Department department = Department.builder().name("HR").build();
         Employee testEmployee = Employee.builder().name("Test Employee").email("test@employee.com")
                 .dateOfBirth(LocalDate.of(1990,1, 1))
-                .clearanceLevel(ClearanceLevel.ROLE_ADMIN)
+                .clearanceLevel(ClearanceLevel.ADMIN)
                 .department(department)
                 .phoneNumber("12345678910")
                 .position("test")
