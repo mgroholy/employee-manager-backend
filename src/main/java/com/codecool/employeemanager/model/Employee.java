@@ -1,5 +1,6 @@
 package com.codecool.employeemanager.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -58,5 +59,10 @@ public class Employee {
 
     @JsonProperty("Date of termination")
     private LocalDate dateOfTermination;
+
+    @OneToOne(mappedBy = "employee")
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
+    private UserModel registeredUser;
 
 }
