@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @RestController
 public class AuthController {
 
@@ -42,6 +42,7 @@ public class AuthController {
             List<ClearanceLevel> levels = authentication.getAuthorities().stream().map(level -> ClearanceLevel.valueOf(level.getAuthority())).collect(Collectors.toList());
             String jwt = jwtTokenServices.createToken(email, levels);
             Cookie cookie = new Cookie("jwt", jwt);
+//            cookie.setSecure(true);
             cookie.setHttpOnly(true);
             httpServletResponse.addCookie(cookie);
             return ResponseEntity.ok().build();
