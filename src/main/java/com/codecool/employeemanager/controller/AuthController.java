@@ -5,6 +5,7 @@ import com.codecool.employeemanager.model.UserDto;
 import com.codecool.employeemanager.service.UserService;
 import com.codecool.employeemanager.security.JwtTokenServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -46,7 +47,7 @@ public class AuthController {
 //            cookie.setSecure(true);
             cookie.setHttpOnly(true);
             httpServletResponse.addCookie(cookie);
-            return ResponseEntity.ok().build();
+            return new ResponseEntity<>(authentication.getPrincipal(), HttpStatus.OK);
         } catch (AuthenticationException authenticationException){
             throw new BadCredentialsException("Invalid email/password.");
         }
