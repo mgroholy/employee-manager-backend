@@ -74,7 +74,7 @@ public class JwtTokenServices {
         List<String> levels = (List<String>) body.get(clearanceLevels);
         List<SimpleGrantedAuthority> authorities = new LinkedList<>();
         for(String level: levels){
-            authorities.add(new SimpleGrantedAuthority(level));
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + level));
         }
         return new UsernamePasswordAuthenticationToken(email, "", authorities);
 
