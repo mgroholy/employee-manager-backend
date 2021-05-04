@@ -1,6 +1,7 @@
 package com.codecool.employeemanager.controller;
 
 import com.codecool.employeemanager.model.UserDto;
+import com.codecool.employeemanager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,10 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private AuthenticationManager authenticationManager;
+    private final UserService userService;
 
     @Autowired
-    public AuthController(AuthenticationManager authenticationManager) {
+    public AuthController(AuthenticationManager authenticationManager, UserService userService) {
         this.authenticationManager = authenticationManager;
+        this.userService = userService;
     }
 
     @PostMapping(path = "/sign-in")
@@ -34,8 +37,11 @@ public class AuthController {
         } catch (AuthenticationException authenticationException){
             throw new BadCredentialsException("Invalid email/password.");
         }
+    }
 
-
+    @PostMapping("/sign-up")
+    public void signUp(@RequestBody UserDto userData) {
+        userService.addUser(userData);
     }
 
 }
