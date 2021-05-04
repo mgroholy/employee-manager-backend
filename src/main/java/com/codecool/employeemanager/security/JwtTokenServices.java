@@ -1,5 +1,6 @@
 package com.codecool.employeemanager.security;
 
+import com.codecool.employeemanager.model.ClearanceLevel;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,16 +23,16 @@ public class JwtTokenServices {
 
     private String secretKey = "e455bfa8-7c7f-4b17-8bcd-aebffe258c6c";
     private final long VALIDITY = 36000000;
-    private final String rolesFieldName = "roles";
+    private final String clearanceLevels = "clearanceLevels";
 
     @PostConstruct
     protected void init() {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createToken(String username, List<String> roles){
+    public String createToken(String username, List<ClearanceLevel> clearanceLevels){
         Claims claims = Jwts.claims().setSubject(username);
-        claims.put(rolesFieldName, roles);
+        claims.put(this.clearanceLevels, clearanceLevels);
         Date now = new Date();
         Date expiration = new Date(now.getTime() + VALIDITY);
         return Jwts.builder()
@@ -70,10 +71,10 @@ public class JwtTokenServices {
     public Authentication parseUserFromToken(String token) throws UsernameNotFoundException {
         Claims body = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
         String email = body.getSubject();
-        List<String> roles = (List<String>) body.get(rolesFieldName);
+        List<String> levels = (List<String>) body.get(clearanceLevels);
         List<SimpleGrantedAuthority> authorities = new LinkedList<>();
-        for(String role: roles){
-            authorities.add(new SimpleGrantedAuthority(role));
+        for(String level: levels){
+            authorities.add(new SimpleGrantedAuthority(level));
         }
         return new UsernamePasswordAuthenticationToken(email, "", authorities);
 
