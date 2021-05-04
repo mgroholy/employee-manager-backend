@@ -3,12 +3,15 @@ package com.codecool.employeemanager.controller;
 import com.codecool.employeemanager.model.ApiError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.naming.AuthenticationException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -35,5 +38,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         String firstMessage = violations.stream().findFirst().orElseThrow().getMessage();
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, LocalDateTime.now(), firstMessage);
         return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({BadCredentialsException.class})
+    private ResponseEntity<Object> handleBadCredentialsException(BadCredentialsException ex){
+        ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED, LocalDateTime.now(), ex.getMessage());
+        return new ResponseEntity<>(apiError, HttpStatus.UNAUTHORIZED);
     }
 }
