@@ -5,6 +5,7 @@ import com.codecool.employeemanager.model.Department;
 import com.codecool.employeemanager.model.Employee;
 import com.codecool.employeemanager.model.Position;
 import com.codecool.employeemanager.repository.EmployeeRepository;
+import com.codecool.employeemanager.repository.PositionRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
@@ -21,12 +22,15 @@ class EmployeeServiceTest {
     private static EmployeeService employeeService;
     private static DepartmentService departmentService;
     private static EmployeeRepository mockEmployeeRepository;
+    private static PositionService mockPositionService;
 
     @BeforeAll
     public static void setup(){
         mockEmployeeRepository = mock(EmployeeRepository.class);
         departmentService = mock(DepartmentService.class);
-        employeeService = new EmployeeService(mockEmployeeRepository, departmentService);
+        mockPositionService = mock(PositionService.class);
+
+        employeeService = new EmployeeService(mockEmployeeRepository, departmentService, mockPositionService);
     }
 
     @Test
