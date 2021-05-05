@@ -26,6 +26,8 @@ public class UserModel {
     @NotEmpty
     private String password;
 
+    @CollectionTable(joinColumns = {@JoinColumn(foreignKey = @ForeignKey(
+            foreignKeyDefinition = "FOREIGN KEY (user_model_id) references public.user_model (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE"))})
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private List<ClearanceLevel> levels = new ArrayList<>();
