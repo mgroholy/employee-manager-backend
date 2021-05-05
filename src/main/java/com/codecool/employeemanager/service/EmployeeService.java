@@ -1,9 +1,6 @@
 package com.codecool.employeemanager.service;
 
-import com.codecool.employeemanager.model.ClearanceLevel;
-import com.codecool.employeemanager.model.Department;
-import com.codecool.employeemanager.model.Employee;
-import com.codecool.employeemanager.model.Status;
+import com.codecool.employeemanager.model.*;
 import com.codecool.employeemanager.repository.EmployeeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,17 +17,21 @@ public class EmployeeService {
 
     private EmployeeRepository employeeRepository;
     private DepartmentService departmentService;
+    private PositionService positionService;
 
     @Autowired
-    public EmployeeService(EmployeeRepository employeeRepository, DepartmentService departmentService) {
+    public EmployeeService(EmployeeRepository employeeRepository, DepartmentService departmentService, PositionService positionService) {
         this.employeeRepository = employeeRepository;
         this.departmentService = departmentService;
+        this.positionService = positionService;
     }
 
     public Employee addEmployee(Employee employee) {
         Optional<Employee> employeeOptional = employeeRepository.findByEmail(employee.getEmail());
         if(employeeOptional.isEmpty()){
             Department department = departmentService.findByName(employee.getDepartment().getName());
+            Position position = positionService.findByName(employee.getPosition().getName());
+            employee.setPosition(position);
             employee.setDepartment(department);
             employee.setStatus(Status.ACTIVE);
             employeeRepository.save(employee);
@@ -66,7 +67,7 @@ public class EmployeeService {
                 case "Phone number": foundEmployee.setPhoneNumber(fieldValue); break;
                 case "Date of birth": foundEmployee.setDateOfBirth(LocalDate.parse(fieldValue)); break;
                 case "Department": foundEmployee.setDepartment(departmentService.findByName(fieldValue)); break;
-                case "Position": foundEmployee.setPosition(fieldValue); break;
+                case "Position": foundEmployee.setPosition(positionService.findByName(fieldValue)); break;
                 case "Clearance level": foundEmployee.setClearanceLevel(ClearanceLevel.valueOf(fieldValue)); break;
                 case "Status": foundEmployee.setStatus(Status.valueOf(fieldValue)); break;
                 case "Date of hire": foundEmployee.setDateOfHire(LocalDate.parse(fieldValue)); break;

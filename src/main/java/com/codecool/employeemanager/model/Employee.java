@@ -42,9 +42,10 @@ public class Employee {
     @JsonProperty("Department")
     private Department department;
 
-    @NotBlank(message = "The position field is required.")
+    @ManyToOne
+//    @NotBlank(message = "The position field is required.")
     @JsonProperty("Position")
-    private String position;
+    private Position position;
 
     @Enumerated(EnumType.STRING)
     @JsonProperty("Clearance level")
