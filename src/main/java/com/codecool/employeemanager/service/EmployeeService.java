@@ -17,17 +17,21 @@ public class EmployeeService {
 
     private EmployeeRepository employeeRepository;
     private DepartmentService departmentService;
+    private PositionService positionService;
 
     @Autowired
-    public EmployeeService(EmployeeRepository employeeRepository, DepartmentService departmentService) {
+    public EmployeeService(EmployeeRepository employeeRepository, DepartmentService departmentService, PositionService positionService) {
         this.employeeRepository = employeeRepository;
         this.departmentService = departmentService;
+        this.positionService = positionService;
     }
 
     public Employee addEmployee(Employee employee) {
         Optional<Employee> employeeOptional = employeeRepository.findByEmail(employee.getEmail());
         if(employeeOptional.isEmpty()){
             Department department = departmentService.findByName(employee.getDepartment().getName());
+            Position position = positionService.findByName(employee.getPosition().getName());
+            employee.setPosition(position);
             employee.setDepartment(department);
             employee.setStatus(Status.ACTIVE);
             employeeRepository.save(employee);
