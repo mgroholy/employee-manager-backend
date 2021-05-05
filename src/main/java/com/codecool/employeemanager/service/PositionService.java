@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class PositionService {
@@ -19,5 +20,9 @@ public class PositionService {
 
     public List<Position> getPositions(){
         return positionRepository.findAll();
+    }
+
+    public Position findByName(String name){
+        return positionRepository.findByName(name).orElseThrow(() -> new NoSuchElementException("No position with the name " + name + " exists"));
     }
 }
