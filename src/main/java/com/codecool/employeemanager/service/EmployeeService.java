@@ -67,7 +67,7 @@ public class EmployeeService {
                 case "Phone number": foundEmployee.setPhoneNumber(fieldValue); break;
                 case "Date of birth": foundEmployee.setDateOfBirth(LocalDate.parse(fieldValue)); break;
                 case "Department": foundEmployee.setDepartment(departmentService.findByName(fieldValue)); break;
-                case "Position": foundEmployee.setPosition(Position.builder().name(fieldValue).build()); break;
+                case "Position": foundEmployee.setPosition(positionService.findByName(fieldValue)); break;
                 case "Clearance level": foundEmployee.setClearanceLevel(ClearanceLevel.valueOf(fieldValue)); break;
                 case "Status": foundEmployee.setStatus(Status.valueOf(fieldValue)); break;
                 case "Date of hire": foundEmployee.setDateOfHire(LocalDate.parse(fieldValue)); break;
