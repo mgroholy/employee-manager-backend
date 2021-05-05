@@ -1,9 +1,6 @@
 package com.codecool.employeemanager.controller;
 
-import com.codecool.employeemanager.model.ClearanceLevel;
-import com.codecool.employeemanager.model.Department;
-import com.codecool.employeemanager.model.Employee;
-import com.codecool.employeemanager.model.Status;
+import com.codecool.employeemanager.model.*;
 import com.codecool.employeemanager.service.EmployeeService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -29,6 +26,7 @@ class EmployeeControllerTest {
     private static Employee employeeHR;
     private static Employee employeeSales;
     private static Employee inactiveEmployee;
+    private static final Position TEST_POSITION = Position.builder().name("test").build();
 
 
     @BeforeAll
@@ -47,7 +45,7 @@ class EmployeeControllerTest {
                 .dateOfBirth(LocalDate.of(1989,1,1))
                 .department(IT)
                 .phoneNumber("12345678910")
-                .position("test")
+                .position(TEST_POSITION)
                 .status(Status.ACTIVE)
                 .build();
         employeeHR = Employee.builder()
@@ -58,7 +56,7 @@ class EmployeeControllerTest {
                 .dateOfBirth(LocalDate.of(1990,1,1))
                 .department(HR)
                 .phoneNumber("12345678910")
-                .position("test")
+                .position(TEST_POSITION)
                 .status(Status.ACTIVE)
                 .build();
         employeeSales = Employee.builder()
@@ -69,7 +67,7 @@ class EmployeeControllerTest {
                 .dateOfBirth(LocalDate.of(1991,1,1))
                 .department(SALES)
                 .phoneNumber("12345678910")
-                .position("test")
+                .position(TEST_POSITION)
                 .status(Status.ACTIVE)
                 .build();
         inactiveEmployee = Employee.builder()
@@ -80,7 +78,7 @@ class EmployeeControllerTest {
                 .dateOfBirth(LocalDate.of(1992,1,1))
                 .department(SALES)
                 .phoneNumber("12345678910")
-                .position("test")
+//                .position("test")
                 .status(Status.INACTIVE)
                 .build();
     }

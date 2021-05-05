@@ -3,6 +3,7 @@ package com.codecool.employeemanager.repository;
 import com.codecool.employeemanager.model.ClearanceLevel;
 import com.codecool.employeemanager.model.Department;
 import com.codecool.employeemanager.model.Employee;
+import com.codecool.employeemanager.model.Position;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,13 +28,22 @@ class EmployeeRepositoryTest {
     @Autowired
     private DepartmentRepository departmentRepository;
 
+    @Autowired
+    private PositionRepository positionRepository;
+
     private Employee testEmployee;
     private Department testDepartment;
+    private Position testPosition;
 
     @BeforeEach
     void setup() {
         testDepartment = Department.builder().name("TEST").build();
+
         departmentRepository.save(testDepartment);
+
+        testPosition = Position.builder().name("test").build();
+
+        positionRepository.save(testPosition);
 
          testEmployee = Employee.builder()
                 .name("Test Employee")
@@ -42,7 +52,7 @@ class EmployeeRepositoryTest {
                 .clearanceLevel(ClearanceLevel.ADMIN)
                 .department(testDepartment)
                 .phoneNumber("12345678910")
-                .position("test")
+                .position(testPosition)
                 .build();
         employeeRepository.save(testEmployee);
     }
@@ -61,7 +71,7 @@ class EmployeeRepositoryTest {
                 .clearanceLevel(ClearanceLevel.USER)
                 .department(testDepartment)
                 .phoneNumber("19876543210")
-                .position("test")
+                .position(testPosition)
                 .build();
         Employee anotherEmployee = Employee.builder()
                 .name("Another Employee")
@@ -70,7 +80,7 @@ class EmployeeRepositoryTest {
                 .clearanceLevel(ClearanceLevel.SUPERVISOR)
                 .department(testDepartment)
                 .phoneNumber("54321019876")
-                .position("test")
+                .position(testPosition)
                 .build();
         employeeRepository.saveAll(Lists.newArrayList(anotherTestEmployee, anotherEmployee));
 
@@ -90,7 +100,7 @@ class EmployeeRepositoryTest {
                 .clearanceLevel(ClearanceLevel.USER)
                 .department(anotherDepartment)
                 .phoneNumber("19876543210")
-                .position("test")
+                .position(testPosition)
                 .build();
         Employee anotherEmployee = Employee.builder()
                 .name("Another Employee")
@@ -99,7 +109,7 @@ class EmployeeRepositoryTest {
                 .clearanceLevel(ClearanceLevel.SUPERVISOR)
                 .department(anotherDepartment)
                 .phoneNumber("54321019876")
-                .position("test")
+                .position(testPosition)
                 .build();
         employeeRepository.saveAll(Lists.newArrayList(anotherTestEmployee, anotherEmployee));
 
