@@ -66,7 +66,8 @@ public class AuthController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Map<String, Object> userDetails = new HashMap<>();
         userDetails.put("user", authentication.getPrincipal());
-        userDetails.put("roles", authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
+        List<String> formattedRoles = authentication.getAuthorities().stream().map(role -> role.getAuthority().substring(5)).collect(Collectors.toList());
+        userDetails.put("roles", formattedRoles);
         return userDetails;
     }
 
