@@ -12,12 +12,15 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
@@ -59,9 +62,13 @@ public class AuthController {
     }
 
     @GetMapping("/user")
-    public String getCurrentUser(){
+    public Map<String, Object> getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (String) authentication.getPrincipal();
+        Map<String, Object> userDetails = new HashMap<>();
+        userDetails.put("user", authentication.getPrincipal());
+        List<String> formattedRoles = authentication.getAuthorities().stream().map(role -> role.getAuthority().substring(5)).collect(Collectors.toList());
+        userDetails.put("roles", formattedRoles);
+        return userDetails;
     }
 
 }
