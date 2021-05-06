@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = {"http://localhost:3000"}, allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @RestController
 public class PositionController {
 
@@ -26,6 +26,11 @@ public class PositionController {
     @PostMapping(path="/positions")
     public Position addNewPosition(@RequestBody Position position){
         return positionService.addNewPosition(position);
+    }
+
+    @DeleteMapping(path="/positions/{id}/delete")
+    public void deletePosition(@PathVariable(name="id") int positionId){
+        positionService.deletePosition(positionId);
     }
 
 }
