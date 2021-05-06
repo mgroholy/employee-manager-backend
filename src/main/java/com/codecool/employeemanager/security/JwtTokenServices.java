@@ -12,10 +12,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Base64;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @Component
 @Slf4j
@@ -24,6 +21,8 @@ public class JwtTokenServices {
     private String secretKey = "e455bfa8-7c7f-4b17-8bcd-aebffe258c6c";
     private final long VALIDITY = 36000000;
     private final String clearanceLevels = "clearanceLevels";
+    // TODO: periodic cleanup for expired tokens
+    private final List<String> invalidTokens = new ArrayList<>();
 
     @PostConstruct
     protected void init() {
@@ -58,10 +57,7 @@ public class JwtTokenServices {
     public boolean validateToken(String token){
         try{
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-            if(claims.getBody().getExpiration().before(new Date())){
-                return false;
-            }
-            return true;
+            return !claims.getBody().getExpiration().before(new Date()) && !invalidTokens.contains(token);
         } catch (JwtException | IllegalArgumentException e){
             log.debug("JWT token invalid " + e);
         }
@@ -77,8 +73,11 @@ public class JwtTokenServices {
             authorities.add(new SimpleGrantedAuthority("ROLE_" + level));
         }
         return new UsernamePasswordAuthenticationToken(email, "", authorities);
+    }
 
-
+    public void invalidateToken(HttpServletRequest request) {
+        String token = getTokenFromRequest(request);
+        invalidTokens.add(token);
     }
 
 }
