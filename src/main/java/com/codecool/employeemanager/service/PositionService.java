@@ -37,4 +37,8 @@ public class PositionService {
         positionRepository.save(position);
         return position;
     }
+
+    public void deletePosition(int positionId) {
+        positionRepository.deleteById(positionId);
+    }
 }
