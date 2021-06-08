@@ -89,7 +89,7 @@ public class EmployeeService {
     }
 
     public List<Employee> findAllByName(String name){
-        return employeeRepository.findByNameContaining(name);
+        return employeeRepository.findByNameContainingIgnoreCase(name);
     }
 
     public Employee findEmployeeByEmail(String email){
