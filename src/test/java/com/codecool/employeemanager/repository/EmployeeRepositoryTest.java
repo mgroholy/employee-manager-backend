@@ -84,7 +84,7 @@ class EmployeeRepositoryTest {
                 .build();
         employeeRepository.saveAll(Lists.newArrayList(anotherTestEmployee, anotherEmployee));
 
-        List<Employee> filteredEmployees = employeeRepository.findByNameContaining("Test");
+        List<Employee> filteredEmployees = employeeRepository.findByNameContainingIgnoreCase("Test");
         assertThat(filteredEmployees).containsExactlyInAnyOrder(testEmployee, anotherTestEmployee);
     }
 
