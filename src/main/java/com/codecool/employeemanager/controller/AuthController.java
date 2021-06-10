@@ -47,7 +47,7 @@ public class AuthController {
             List<ClearanceLevel> levels = authentication.getAuthorities().stream().map(level -> ClearanceLevel.valueOf(level.getAuthority())).collect(Collectors.toList());
             String jwt = jwtTokenServices.createToken(email, levels);
             Cookie cookie = new Cookie("jwt", jwt);
-//            cookie.setSecure(true);
+            cookie.setSecure(true);
             cookie.setMaxAge(36000);
             cookie.setHttpOnly(true);
             httpServletResponse.addCookie(cookie);
