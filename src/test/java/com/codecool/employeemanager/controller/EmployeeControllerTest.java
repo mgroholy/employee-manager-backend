@@ -88,7 +88,7 @@ class EmployeeControllerTest {
         List<Employee> allEmployees = Arrays.asList(employeeIT, employeeHR, employeeSales, inactiveEmployee);
         when(mockEmployeeService.findAllEmployees()).thenReturn(allEmployees);
         List<Employee> requestResult = employeeController.getEmployees(new HashMap<>());
-        assertEquals(List.of(employeeIT, employeeHR, employeeSales), requestResult);
+        assertEquals(Arrays.asList(employeeIT, employeeHR, employeeSales), requestResult);
     }
 
     @Test
@@ -98,20 +98,20 @@ class EmployeeControllerTest {
         Map<String, String> requestParams = new HashMap<>();
         requestParams.put("department", "all");
         List<Employee> requestResult = employeeController.getEmployees(requestParams);
-        assertEquals(List.of(employeeIT,employeeHR,employeeSales), requestResult);
+        assertEquals(Arrays.asList(employeeIT,employeeHR,employeeSales), requestResult);
     }
     @Test
     public void getEmployees_paramDepartmentIT_returnsEmployeeWithDepartmentIT(){
         Map<String, String> requestParams = new HashMap<>();
         requestParams.put("department", "IT");
-        when(mockEmployeeService.findByDepartment(requestParams.get("department"))).thenReturn(List.of(employeeIT));
+        when(mockEmployeeService.findByDepartment(requestParams.get("department"))).thenReturn(Arrays.asList(employeeIT));
         assertEquals(employeeIT, employeeController.getEmployees(requestParams).get(0));
     }
     @Test
     public void getEmployees_paramDepartmentHR_returnsEmployeeWithDepartmentHR(){
         Map<String, String> requestParams = new HashMap<>();
         requestParams.put("department", "HR");
-        when(mockEmployeeService.findByDepartment(requestParams.get("department"))).thenReturn(List.of(employeeHR));
+        when(mockEmployeeService.findByDepartment(requestParams.get("department"))).thenReturn(Arrays.asList(employeeHR));
         assertEquals(employeeHR, employeeController.getEmployees(requestParams).get(0));
     }
 
@@ -119,7 +119,7 @@ class EmployeeControllerTest {
     public void getEmployees_paramDepartmentSales_returnsEmployeeWithDepartmentSales(){
         Map<String, String> requestParams = new HashMap<>();
         requestParams.put("department", "Sales");
-        when(mockEmployeeService.findByDepartment(requestParams.get("department"))).thenReturn(List.of(employeeSales));
+        when(mockEmployeeService.findByDepartment(requestParams.get("department"))).thenReturn(Arrays.asList(employeeSales));
         assertEquals(employeeSales, employeeController.getEmployees(requestParams).get(0));
     }
 
@@ -151,7 +151,7 @@ class EmployeeControllerTest {
     public void getEmployees_paramValidName_returnsEmployeeWithName(){
         Map<String, String> requestParams = new HashMap<>();
         requestParams.put("name", employeeSales.getName());
-        when(mockEmployeeService.findAllByName(employeeSales.getName())).thenReturn(List.of(employeeSales));
+        when(mockEmployeeService.findAllByName(employeeSales.getName())).thenReturn(Arrays.asList(employeeSales));
         assertEquals(employeeSales, employeeController.getEmployees(requestParams).get(0));
     }
 
@@ -159,7 +159,7 @@ class EmployeeControllerTest {
     public void getEmployees_paramShowInactiveTrue_returnsAllEmployees(){
         Map<String, String> requestParams = new HashMap<>();
         requestParams.put("showInactive", "true");
-        when(mockEmployeeService.findAllEmployees()).thenReturn(List.of(employeeIT,employeeHR,employeeSales,inactiveEmployee));
+        when(mockEmployeeService.findAllEmployees()).thenReturn(Arrays.asList(employeeIT,employeeHR,employeeSales,inactiveEmployee));
         assertEquals(4, employeeController.getEmployees(requestParams).size());
     }
 
@@ -167,7 +167,7 @@ class EmployeeControllerTest {
     public void getEmployees_paramNoActiveEmployeeFound_throwsNoSuchElementException(){
         Map<String, String> requestParams = new HashMap<>();
         requestParams.put("name", inactiveEmployee.getName());
-        when(mockEmployeeService.findAllByName(inactiveEmployee.getName())).thenReturn(List.of(inactiveEmployee));
+        when(mockEmployeeService.findAllByName(inactiveEmployee.getName())).thenReturn(Arrays.asList(inactiveEmployee));
         assertThrows(NoSuchElementException.class, () -> employeeController.getEmployees(requestParams));
     }
     @Test
@@ -175,7 +175,7 @@ class EmployeeControllerTest {
         Map<String, String> requestParams = new HashMap<>();
         requestParams.put("name", inactiveEmployee.getName());
         requestParams.put("showInactive", "true");
-        when(mockEmployeeService.findAllByName(inactiveEmployee.getName())).thenReturn(List.of(inactiveEmployee));
+        when(mockEmployeeService.findAllByName(inactiveEmployee.getName())).thenReturn(Arrays.asList(inactiveEmployee));
         assertEquals(inactiveEmployee, employeeController.getEmployees(requestParams).get(0));
     }
 
