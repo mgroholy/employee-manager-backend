@@ -5,7 +5,9 @@ import com.codecool.employeemanager.model.UserDto;
 import com.codecool.employeemanager.service.UserService;
 import com.codecool.employeemanager.security.JwtTokenServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,7 +17,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
@@ -46,11 +47,13 @@ public class AuthController {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
             List<ClearanceLevel> levels = authentication.getAuthorities().stream().map(level -> ClearanceLevel.valueOf(level.getAuthority())).collect(Collectors.toList());
             String jwt = jwtTokenServices.createToken(email, levels);
-            Cookie cookie = new Cookie("jwt", jwt);
-            cookie.setSecure(true);
-            cookie.setMaxAge(36000);
-            cookie.setHttpOnly(true);
-            httpServletResponse.addCookie(cookie);
+            ResponseCookie cookie = ResponseCookie.from("jwt", jwt)
+                    .maxAge(36000)
+                    .sameSite("None")
+                    .httpOnly(true)
+                    .secure(true)
+                    .build();
+            httpServletResponse.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
             return new ResponseEntity<>(authentication.getPrincipal(), HttpStatus.OK);
         } catch (AuthenticationException authenticationException){
             throw new BadCredentialsException("Invalid email/password.");
