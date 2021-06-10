@@ -28,7 +28,7 @@ public class EmployeeService {
 
     public Employee addEmployee(Employee employee) {
         Optional<Employee> employeeOptional = employeeRepository.findByEmail(employee.getEmail());
-        if(employeeOptional.isEmpty()){
+        if(!employeeOptional.isPresent()){
             Department department = departmentService.findByName(employee.getDepartment().getName());
             Position position = positionService.findByName(employee.getPosition().getName());
             employee.setPosition(position);

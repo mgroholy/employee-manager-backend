@@ -35,7 +35,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     private ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex){
         Set<ConstraintViolation<?>> violations = ex.getConstraintViolations();
-        String firstMessage = violations.stream().findFirst().orElseThrow().getMessage();
+        String firstMessage = violations.stream().findFirst().orElseThrow(NoSuchElementException::new).getMessage();
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, LocalDateTime.now(), firstMessage);
         return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
     }

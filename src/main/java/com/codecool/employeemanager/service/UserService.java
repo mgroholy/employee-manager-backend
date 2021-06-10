@@ -45,7 +45,7 @@ public class UserService {
     }
 
     private boolean isEmailUnique(String email) {
-        if (userRepository.findByEmail(email).isEmpty()) return true;
+        if (!userRepository.findByEmail(email).isPresent()) return true;
         else throw new IllegalArgumentException("Email address already in use.");
     }
 
