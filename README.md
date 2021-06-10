@@ -9,10 +9,11 @@ This is a **Codecool** team project created during the last module of the school
 
 The application provides a secure way to store and manage employee details as well as related positions and departments. Users can take advantage of different features depending on their clearance level.
 
-The **frontend** part of the project can be found [here](https://github.com/mgroholy/employee-manager-frontend). The app has been deployed with the help of Heroku and Netlify: ```TODO```
+The **frontend** part of the project can be found [here](https://github.com/mgroholy/employee-manager-frontend). The app has been deployed with the help of Heroku and Netlify:   
+[employee-ms.netlify.app](https://employee-ms.netlify.app/)
 
 ## Technologies
-✓ Java 11  
+✓ Java 8  
 ✓ Spring Boot
 - Web
 - JPA
@@ -54,3 +55,16 @@ DEPARTMENTS / POSITIONS
 + List
 + Add
 + Delete
+
+## Demo users
+USER  
+email: ```john@doe.com```  
+password: john   
+
+SUPERVISOR  
+email: ```jack@smith.com```  
+password: jack    
+
+ADMIN  
+email: ```matt@davis.com```  
+password: matt    
