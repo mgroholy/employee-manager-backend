@@ -13,7 +13,7 @@ The **frontend** part of the project can be found [here](https://github.com/mgro
 [employee-ms.netlify.app](https://employee-ms.netlify.app/)
 
 ## Technologies
-✓ Java 8  
+✓ Java 8 & 11  
 ✓ Spring Boot
 - Web
 - JPA
